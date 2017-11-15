@@ -82,4 +82,12 @@ object Application extends Controller {
   def changeCharset = Action {
     Ok(<h1>Hello World!</h1>).as(HTML)
   }
+
+  def customAction = LoggingAction {
+    Ok("Hello World")
+  }
+
+  def customActionWithBodyParser = LoggingAction(parse.text) { request =>
+    Ok("Got a body " + request.body.length + " bytes long")
+  }
 }
