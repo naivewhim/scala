@@ -51,7 +51,35 @@ object Application extends Controller {
 
   val ok = Ok("Hello world!")
   val notFound = NotFound
-  val pageNotFound = NotFound(<h1>Page not found</h1>)
   val oops = InternalServerError("Oops")
   val anyStatus = Status(488)("Strange response type")
+
+  // 자동으로 Content-Type = application/xml (by. play.api.http.ContentTypeOf)
+  val pageNotFound = NotFound(<h1>Page not found</h1>)
+
+  // content type 을 바꾸고 싶을 때때
+  val htmlResult1 = Ok(<h1>Hello World!</h1>).as("text/html")
+  val htmlResult2 = Ok(<h1>Hello World!</h1>).as(HTML)
+
+  // 헤더 조작 (이전의 값이 지워지는 형태)
+  val result = Ok("Hello World!").withHeaders(
+    CACHE_CONTROL -> "max-age=3600",
+    ETAG -> "xx")
+
+  // 쿠키 추가
+  val cookieAdd = Ok("Hello world").withCookies(
+    Cookie("theme", "blue"))
+
+  // 쿠키 해제
+  val cookieDiscard = cookieAdd.discardingCookies(DiscardingCookie("theme"))
+
+  // 쿠키 추가 및 해제
+  val cookieAddAndDiscard = cookieAdd.withCookies(Cookie("theme", "blue")).discardingCookies(DiscardingCookie("skin"))
+
+  // charset 변경 (codec 클래스에 생김 default implicit 은 utf-8)
+  implicit val myCustomCharset = Codec.javaSupported("iso-8859-1")
+
+  def changeCharset = Action {
+    Ok(<h1>Hello World!</h1>).as(HTML)
+  }
 }
