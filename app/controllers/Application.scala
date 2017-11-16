@@ -21,34 +21,35 @@ object Application extends Controller {
 
   def index = TODO
 
-  def helloBob = Action {
-    Redirect(routes.Application.hello("Bob"))
-  }
-
-  def optionValue(version: Option[String]) = Action {
-    Ok("option value: " + version)
-  }
-
-  def defaultValue(n: String) = Action {
-    Ok("default value: " + n)
+  def hello(name: String) = Action {
+    Ok(views.html.index(name))
   }
 
   def fixValue(n: String) = Action {
     Ok("fixed value: " + n)
   }
 
-  def hello(name: String) = Action {
-    Ok(views.html.index(name))
+  def defaultValue(n: String) = Action {
+    Ok("default value: " + n)
   }
 
-  def hello2(id: Long) = Action {
-    Ok("hello" + id)
+  def optionValue(version: Option[String]) = Action {
+    Ok("option value: " + version)
+  }
+
+  def helloUser(id: Long) = Action {
+    Ok("hello user id: " + id)
+  }
+
+  def helloBob = Action {
+    Redirect(routes.Application.hello("Bob"))
   }
 
   val echo = Action { request =>
     Ok("Got request [" + request + "]")
   }
 
+  // 다음과 같이 변수로 선언해서 사용할 수 있음
   val ok = Ok("Hello world!")
   val notFound = NotFound
   val oops = InternalServerError("Oops")

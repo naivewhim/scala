@@ -2,35 +2,34 @@
 # This file defines all application routes (Higher priority routes first)
 
 # Home page
-GET     /                           controllers.Application.index
+GET        /                              controllers.Application.index
 
 # Static path
 # Extract the page parameter from the query string.
 # ex. http://localhost:9000/hello?n="tt"
 # String 은 파라미터 타입을 쓰는 것이 옵션
-GET        /hello                   controllers.Application.hello(n)
+GET        /hello                         controllers.Application.hello(n)
 
 # Parameters with fixed values
-GET        /hello/fix-value         controllers.Application.fixValue(n = "fix value")
+GET        /fix-value                     controllers.Application.fixValue(n = "fix value")
 
 # Parameters with default values
-GET        /hello/default-value        controllers.Application.defaultValue(n: String ?= "default value")
+GET        /default-value                 controllers.Application.defaultValue(n: String ?= "default value")
 
 # Optional parameters
-GET        /hello/option-value        controllers.Application.optionValue(version: Option[String])
+GET        /option-value                  controllers.Application.optionValue(version: Option[String])
 
 # Dynamic parts
 # Extract the page parameter from the path.
-# ex. http://localhost:9000/hello2/111
-GET        /hello2/:id        controllers.Application.hello2(id: Long)
+GET        /hello-user/:id                controllers.Application.helloUser(id: Long)
 
 # Dynamic parts with custom regular expressions
-GET        /hello2/$id<[0-9]+>        controllers.Application.hello2(id: Long)
+GET        /hello-user/$id<[0-9]+>        controllers.Application.helloUser(id: Long)
 
 # Dynamic parts spanning several
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET        /assets/*file                  controllers.Assets.at(path="/public", file)
 
 # Reverse routing: generate a URL from within a Scala call.
-GET     /hello/reverse-route        controllers.Application.helloBob
+GET        /hello/reverse-route           controllers.Application.helloBob
     
